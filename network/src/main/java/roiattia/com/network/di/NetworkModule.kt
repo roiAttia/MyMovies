@@ -6,6 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import roiattia.com.network.TheMoviesDbService
 import roiattia.com.network.NetworkConstants.API_KEY
 import roiattia.com.network.NetworkConstants.BASE_URL
 import javax.inject.Singleton
@@ -51,10 +52,17 @@ object NetworkModule {
     fun provideRetrofit(
         converterFactory: MoshiConverterFactory,
         okHttpClient: OkHttpClient
-    ): Retrofit =
+    ): Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(converterFactory)
-            .build()
+
+
+    @JvmStatic
+    @Singleton
+    @Provides
+    fun provideMoviesService(
+        retrofitBuilder: Retrofit.Builder
+    ): TheMoviesDbService = retrofitBuilder.build().create(TheMoviesDbService::class.java)
 }
