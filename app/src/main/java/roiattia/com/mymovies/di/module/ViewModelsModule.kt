@@ -1,4 +1,4 @@
-package roiattia.com.mymovies.di
+package roiattia.com.mymovies.di.module
 
 import dagger.Module
 

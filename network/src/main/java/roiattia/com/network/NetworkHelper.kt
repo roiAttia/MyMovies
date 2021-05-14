@@ -9,42 +9,52 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import roiattia.com.network.data.response.ErrorResponse
 import java.io.IOException
+import javax.inject.Inject
 
+class NetworkHelper {
 
-object NetworkHelper {
+    companion object {
 
-    suspend fun <T> safeApiCall(
-        dispatcher: CoroutineDispatcher = Dispatchers.IO,
-        apiCall: suspend () -> Response<T>
-    ): ResultWrapper<T> {
-        return withContext(dispatcher) {
-            try {
-                val callResponse = apiCall.invoke()
-                if (callResponse.isSuccessful) {
-                    ResultWrapper.Success(callResponse.body()!!)
-                } else {
-                    val errorResponse = convertErrorBody(callResponse.errorBody())
-                    ResultWrapper.HttpError(errorResponse?.message, errorResponse?.code)
+        private val moshi = Moshi.Builder().build()
+
+        suspend fun <T> safeApiCall(
+            dispatcher: CoroutineDispatcher = Dispatchers.IO,
+            apiCall: suspend () -> Response<T>
+        ): ResultWrapper<T> {
+            return withContext(dispatcher) {
+                try {
+                    val callResponse = apiCall.invoke()
+                    if (callResponse.isSuccessful) {
+                        val responseBody = callResponse.body()
+                        if (responseBody != null) {
+                            ResultWrapper.Success(responseBody)
+                        } else {
+                            ResultWrapper.GeneralError
+                        }
+                    } else {
+                        val errorResponse = convertErrorBody(callResponse.errorBody())
+                        ResultWrapper.HttpError(errorResponse?.message, errorResponse?.code)
+                    }
+                } catch (e: IOException) {
+                    ResultWrapper.NetworkConnectionError
+                } catch (e: java.lang.Exception) {
+                    ResultWrapper.GeneralError
                 }
-            } catch (e: IOException) {
-                ResultWrapper.NetworkConnectionError
-            } catch (e: java.lang.Exception) {
-                ResultWrapper.GeneralError
             }
         }
-    }
 
-    private fun convertErrorBody(errorBody: ResponseBody?): ErrorResponse? {
-        if (errorBody != null) {
-            return try {
-                val moshi = Moshi.Builder().build()
-                val jsonAdapter: JsonAdapter<ErrorResponse> = moshi.adapter(ErrorResponse::class.java)
-                jsonAdapter.fromJson(errorBody.string())
-            } catch (exception: Exception) {
-                null
+        private fun convertErrorBody(errorBody: ResponseBody?): ErrorResponse? {
+            if (errorBody != null) {
+                return try {
+                    val jsonAdapter: JsonAdapter<ErrorResponse> =
+                        moshi.adapter(ErrorResponse::class.java)
+                    jsonAdapter.fromJson(errorBody.string())
+                } catch (exception: Exception) {
+                    null
+                }
             }
+            return null
         }
-        return null
     }
 }
 
