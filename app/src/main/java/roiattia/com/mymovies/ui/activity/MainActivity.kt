@@ -1,4 +1,4 @@
-package roiattia.com.mymovies.ui
+package roiattia.com.mymovies.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
