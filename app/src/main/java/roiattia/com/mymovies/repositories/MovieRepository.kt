@@ -2,9 +2,9 @@ package roiattia.com.mymovies.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import roiattia.com.mymovies.providers.MovieNetworkProvider
+import roiattia.com.network.MovieNetworkProvider
 import roiattia.com.network.ResultWrapper
-import roiattia.com.network.data.response.MovieResponse
+import roiattia.com.network.model.response.MovieResponse
 import javax.inject.Inject
 
 interface MovieRepository {

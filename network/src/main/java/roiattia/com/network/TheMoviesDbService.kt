@@ -2,10 +2,10 @@ package roiattia.com.network
 
 import retrofit2.Response
 import retrofit2.http.GET
-import roiattia.com.network.data.response.MoviesListResponse
+import roiattia.com.network.model.response.MoviesListResponse
 
 interface TheMoviesDbService {
 
-    @GET(NetworkConstants.POPULAR_MOVIES_ENDPOINT)
-    suspend fun getPopularMovies(): Response<MoviesListResponse>
+    @GET(Constants.POPULAR_MOVIES_ENDPOINT)
+    suspend fun  getPopularMovies(): Response<MoviesListResponse>
 }

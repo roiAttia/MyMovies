@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import roiattia.com.network.ApiKeyInterceptor
 import roiattia.com.network.TheMoviesDbService
-import roiattia.com.network.NetworkConstants.BASE_URL
+import roiattia.com.network.Constants.BASE_URL
 import javax.inject.Singleton
 
 @Module

@@ -7,9 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 import retrofit2.Response
-import roiattia.com.network.data.response.ErrorResponse
+import roiattia.com.network.model.response.ErrorResponse
 import java.io.IOException
-import javax.inject.Inject
 
 class NetworkHelper {
 

@@ -1,6 +1,6 @@
 package roiattia.com.network
 
-object NetworkConstants {
+object Constants {
 
     const val BASE_URL = "http://api.themoviedb.org"
     const val API_KEY_VALUE = "18cf6243889fcb96f5e11a640bce4e6e"

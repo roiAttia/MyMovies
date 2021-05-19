@@ -1,4 +1,4 @@
-package roiattia.com.network.data.response
+package roiattia.com.network.model.response
 
 import com.squareup.moshi.Json
 

@@ -1,9 +1,6 @@
-package roiattia.com.mymovies.providers
+package roiattia.com.network
 
-import roiattia.com.network.NetworkHelper
-import roiattia.com.network.ResultWrapper
-import roiattia.com.network.TheMoviesDbService
-import roiattia.com.network.data.response.MoviesListResponse
+import roiattia.com.network.model.response.MoviesListResponse
 import javax.inject.Inject
 
 interface MovieNetworkProvider {
